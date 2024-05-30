@@ -20,7 +20,7 @@ Bem-vindo ao sistema de gerenciamento de transporte de pacientes do Hospital Ger
 
 1. **Clone o repositório**:
     ```bash
-    git clone https://github.com/seu-usuario/seu-repositorio.git
+    git clone https://github.com/SilasMatos/api_hcga.git
     ```
 
 2. **Instale as dependências**:
@@ -74,4 +74,4 @@ Este sistema utiliza tokens JWT para autenticação e autorização. Certifique-
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull requests.
 
-[Visite o Repositório](https://github.com/seu-usuario/seu-repositorio)
+[Visite o Repositório](https://github.com/SilasMatos/api_hcga.git)
