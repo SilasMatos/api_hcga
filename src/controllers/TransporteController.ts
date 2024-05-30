@@ -15,26 +15,41 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
   reply.send(transporte);
 }
 
+export async function getAll(request: FastifyRequest, reply: FastifyReply) {
+  const transportes = await Transporte.find();
+  reply.send(transportes);
+}
+
 export async function getOne(request: FastifyRequest<RouteParams>, reply: FastifyReply) {
   const id = request.params.id;
   const transporte = await Transporte.findById(id);
   reply.send(transporte);
 }
 
-export async function update(request: FastifyRequest<RouteParams>, reply: FastifyReply) {
+export async function updateStatus(request: FastifyRequest<RouteParams>, reply: FastifyReply) {
   const id = request.params.id;
-  const data: ITransporte = request.body as ITransporte;
-  const updatedTransporte = await Transporte.findByIdAndUpdate(id, data, { new: true });
+  const { status } = request.body as { status: 'Aguardando' | 'Em transporte' | 'Concluído' };
+  const updatedTransporte = await Transporte.findByIdAndUpdate(id, { status }, { new: true });
   reply.send(updatedTransporte);
 }
 
-export async function deleteTransporte(request: FastifyRequest<RouteParams>, reply: FastifyReply) {
+export async function updatePriority(request: FastifyRequest<RouteParams>, reply: FastifyReply) {
   const id = request.params.id;
-  const deletedTransporte = await Transporte.findByIdAndDelete(id);
-  reply.send(deletedTransporte);
+  const { priority } = request.body as { priority: 'Baixa' | 'Média' | 'Alta' };
+  const updatedTransporte = await Transporte.findByIdAndUpdate(id, { priority }, { new: true });
+  reply.send(updatedTransporte);
 }
 
-export async function getAll(request: FastifyRequest, reply: FastifyReply) {
-  const transportes = await Transporte.find();
-  reply.send(transportes);
+export async function registerIncident(request: FastifyRequest<RouteParams>, reply: FastifyReply) {
+  const id = request.params.id;
+  const { incidentReport } = request.body as { incidentReport: string };
+  const updatedTransporte = await Transporte.findByIdAndUpdate(id, { incidentReport }, { new: true });
+  reply.send(updatedTransporte);
+}
+
+export async function updateLocation(request: FastifyRequest<RouteParams>, reply: FastifyReply) {
+  const id = request.params.id;
+  const { location } = request.body as { location: string };
+  const updatedTransporte = await Transporte.findByIdAndUpdate(id, { location }, { new: true });
+  reply.send(updatedTransporte);
 }

@@ -1,17 +1,17 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-
 export interface ITransporte extends Document {
   paciente: string;
   maqueiro: string;
   dataHoraInicio: Date;
   dataHoraFim: Date;
-  status: 'Aguardando' | 'Em transporte' | 'Concluído'
-
+  status: 'Aguardando' | 'Em transporte' | 'Concluído';
+  location?: string;
+  priority?: 'Baixa' | 'Média' | 'Alta';
+  incidentReport?: string;
 }
 
 class Transporte {
-
   private schema: Schema;
 
   constructor() {
@@ -20,7 +20,10 @@ class Transporte {
       maqueiro: { type: mongoose.Schema.Types.ObjectId, ref: 'Maqueiro', required: true },
       dataHoraInicio: { type: Date, default: Date.now },
       dataHoraFim: { type: Date },
-      status: { type: String, enum: ['Aguardando', 'Em transporte', 'Concluído'], default: 'Aguardando' }
+      status: { type: String, enum: ['Aguardando', 'Em transporte', 'Concluído'], default: 'Aguardando' },
+      location: { type: String, default: '' },
+      priority: { type: String, enum: ['Baixa', 'Média', 'Alta'], default: 'Média' },
+      incidentReport: { type: String, default: '' }
     });
   }
 
@@ -30,5 +33,3 @@ class Transporte {
 }
 
 export default new Transporte().getModel();
-
-
