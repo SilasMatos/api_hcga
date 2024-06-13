@@ -35,11 +35,19 @@ class App {
   }
 
   public start() {
+    const port = process.env.PORT || 3000;
     this.server.listen(
       {
-        port: 3000
+        port: Number(port),
+        host: '0.0.0.0'
       },
-      () => console.log('Server is running on http://localhost:3000 ✅')
+      (err, address) => {
+        if (err) {
+          console.error(err);
+          process.exit(1);
+        }
+        console.log(`Server is running on ${address} ✅`);
+      }
     );
   }
 }
