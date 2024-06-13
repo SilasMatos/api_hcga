@@ -2,12 +2,16 @@ import fastify, { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
 import 'dotenv/config';
 import mongoose from 'mongoose';
 import { MainRoutes } from './routes/Router';
+import cors from '@fastify/cors'
 
 class App {
   private server: FastifyInstance;
 
   constructor() {
     this.server = fastify();
+    this.server.register(cors, {
+      origin: ['http://localhost:5173']
+    });
     this.routes();
     this.connectToDb();
   }

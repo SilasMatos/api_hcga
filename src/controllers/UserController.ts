@@ -50,7 +50,7 @@ export default class UserController {
     const user = new UserSchema({ name, email, password: passwordHash, birthDate, role, phone, username });
     try {
       await user.save();
-      reply.status(201).send({ msg: 'Usuario criado com sucesso!' });
+      reply.status(201).send({ status: 201, msg: 'Usuario criado com sucesso!' });
     } catch (error) {
       console.error('Erro ao registrar usuário:', error);
       reply.status(500).send({ msg: 'Erro no servidor' });
@@ -60,17 +60,17 @@ export default class UserController {
   static async loginUser(request: FastifyRequest<{ Body: LoginBody }>, reply: FastifyReply) {
     const { email, password } = request.body;
     if (!email || !password) {
-      reply.status(422).send({ msg: 'Dados inválidos!' });
+      reply.status(422).send({ status: 422, msg: 'Dados inválidos!' });
       return;
     }
     const user = await UserSchema.findOne({ email });
     if (!user) {
-      reply.status(404).send({ msg: 'Usuario não encontrado!' });
+      reply.status(404).send({ status: 404, msg: 'Usuario não encontrado!' });
       return;
     }
     const checkPassword = await bcrypt.compare(password, user.password);
     if (!checkPassword) {
-      reply.status(422).send({ msg: 'Senha Inválida!' });
+      reply.status(422).send({ status: 422, msg: 'Senha Inválida!' });
       return;
     }
     try {
@@ -79,7 +79,7 @@ export default class UserController {
         throw new Error('SECRET não definido no arquivo .env');
       }
       const token = jwt.sign({ id: user._id }, secret);
-      reply.send({ msg: 'Autenticação realizada com sucesso!', token });
+      reply.send({ status: 201, msg: 'Autenticação realizada com sucesso!', token });
     } catch (err) {
       console.error('Erro ao realizar login:', err);
       reply.status(500).send({ msg: 'Erro no servidor' });
