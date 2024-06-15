@@ -22,7 +22,7 @@ class App {
   }
 
   private async index(request: FastifyRequest, reply: FastifyReply) {
-    reply.send({ message: 'Hello, World!' });
+    reply.send({ message: 'Seja, bem vindo' });
   }
 
   private async connectToDb() {
